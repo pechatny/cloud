@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8"
+          fx:controller="ru.pechatny.cloud.client.Controllers.Controller">
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="113.0" minHeight="84.0" prefHeight="93.0"/>
+        <RowConstraints maxHeight="451.0" minHeight="422.0" prefHeight="442.0"/>
+    </rowConstraints>
+    <children>
+        <SplitPane prefHeight="450.0" prefWidth="526.0" GridPane.rowIndex="1">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="502.0">
+                    <children>
+                        <TreeView fx:id="mainTree" layoutX="-2.0" layoutY="-1.0" prefHeight="440.0" prefWidth="256.0"/>
+                        <TreeView fx:id="serverTree" layoutX="268.0" layoutY="-2.0" prefHeight="442.0"
+                                  prefWidth="256.0"/>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+        <SplitPane dividerPositions="0.4819277108433735" orientation="VERTICAL" prefHeight="85.0" prefWidth="526.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                    <children>
+                        <MenuBar layoutY="4.0" prefHeight="29.0" prefWidth="524.0">
+                            <menus>
+                                <Menu mnemonicParsing="false" text="File">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Настройки" onAction="#openSettings"/>
+                                        <MenuItem mnemonicParsing="false" text="Закрыть" onAction="#exit"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Edit">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                                    </items>
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" text="About"/>
+                                    </items>
+                                </Menu>
+                            </menus>
+                        </MenuBar>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                    <children>
+                        <TextField fx:id="textField" layoutX="31.0" layoutY="8.0"/>
+                        <Button fx:id="loginAction" layoutX="438.0" layoutY="8.0" mnemonicParsing="false"
+                                onAction="#openLoginForm" prefHeight="27.0" prefWidth="77.0" text="Login"/>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</GridPane>
