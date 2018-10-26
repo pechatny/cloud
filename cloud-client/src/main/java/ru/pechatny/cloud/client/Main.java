@@ -5,11 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.pechatny.cloud.common.LoginRequest;
+import ru.pechatny.cloud.common.SuccessResponse;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.prefs.Preferences;
 
 public class Main extends Application {
@@ -25,12 +24,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         preferences = Preferences.userRoot();
-        boolean isAuthorized = preferences.getBoolean("authorized", false);
-        readProperties();
         Main.primaryStage = primaryStage;
 
-        String sceneSource = "mainUnauth.fxml";
-//        String sceneSource = isAuthorized ? "mainWindow.fxml" : "mainUnauth.fxml";
+        String sceneSource;
+        if (isAuthorized() && authorize()) {
+            sceneSource = "mainWindow.fxml";
+        } else {
+            sceneSource = "mainUnauth.fxml";
+        }
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(sceneSource)));
         root.getStylesheets().add(getClass().getClassLoader().getResource("FlatBee.css").toString());
         primaryStage.setTitle("Cloud Manager");
@@ -38,19 +40,22 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void readProperties() {
-        System.out.println(getClass().getClassLoader().getResource("config.properties").getPath());
-        InputStream inputStream;
-        Properties property = new Properties();
+    private boolean authorize() {
+        Client client = Client.getInstance();
 
-        try {
-            inputStream = getClass().getClassLoader().getResourceAsStream("config.properties");
-            property.load(inputStream);
+        String login = preferences.get("login", "");
+        String password = preferences.get("password", "");
 
-            String storagePath = property.getProperty("storage.path");
-            System.out.println("path: " + storagePath);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        LoginRequest loginRequest = new LoginRequest(login, password);
+        SuccessResponse response = client.login(loginRequest);
+
+        return response.isSuccess();
+    }
+
+    private boolean isAuthorized() {
+        String login = preferences.get("login", null);
+        String password = preferences.get("password", null);
+
+        return (login != null && password != null);
     }
 }

@@ -37,7 +37,7 @@ import static ru.pechatny.cloud.client.Main.primaryStage;
 public class Controller implements Initializable {
 
     public TextField textField;
-    public Button loginAction;
+    public Button exitButton;
     private String basePath = "/Users/d.pechatnikov/study/storage/";
     private Preferences preferences;
 
@@ -164,8 +164,6 @@ public class Controller implements Initializable {
         Path filePathItem = Paths.get(filePath);
 
         if (Files.isDirectory(filePathItem)) {
-//            client.mkdir(getRelativePath(filePath).toString());
-
             try {
                 Files.newDirectoryStream(filePathItem).forEach(item -> {
                     sendFile(item.toString(), client);
@@ -187,17 +185,11 @@ public class Controller implements Initializable {
 
     }
 
-    public Path getRelativePath(String path) {
+    private Path getRelativePath(String path) {
         Path basePathItem = Paths.get(basePath);
         Path filePathItem = Paths.get(path);
-        Path relativePath = Paths.get(path).subpath(basePathItem.getNameCount(), filePathItem.getNameCount());
 
-        return relativePath;
-    }
-
-    public void openLoginForm(ActionEvent actionEvent) {
-        Stage loginStage = WindowManager.getModalWindow("loginForm.fxml", primaryStage);
-        loginStage.show();
+        return Paths.get(path).subpath(basePathItem.getNameCount(), filePathItem.getNameCount());
     }
 
     public void openSettings(ActionEvent actionEvent) {
@@ -211,5 +203,10 @@ public class Controller implements Initializable {
 
     public void exit(ActionEvent actionEvent) {
         System.exit(0);
+    }
+
+    public void logout(ActionEvent actionEvent) {
+        Client.getInstance().disconnect();
+        WindowManager.changeMainStage("mainUnauth.fxml");
     }
 }

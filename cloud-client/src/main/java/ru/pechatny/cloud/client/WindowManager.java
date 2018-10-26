@@ -27,4 +27,18 @@ public class WindowManager {
 
         return loginStage;
     }
+
+    public static void changeMainStage(String sceneSource) {
+        Stage primaryStage = Main.primaryStage;
+        Parent root;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(WindowManager.class.getClassLoader().getResource(sceneSource)));
+            root.getStylesheets().add(WindowManager.class.getClassLoader().getResource("FlatBee.css").toString());
+            primaryStage.setTitle("Cloud Manager");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

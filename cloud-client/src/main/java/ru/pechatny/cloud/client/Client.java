@@ -14,40 +14,23 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.prefs.Preferences;
 
-public class Client implements Runnable {
+public class Client {
     private static Client instance;
-    private String host;
-    private int port;
     private Socket socket;
 
     private Client() {
     }
 
-    private Client(String host, int port) {
-        this.host = host;
-        this.port = port;
-    }
-
     public static Client getInstance() {
         if (instance == null) {
-            Preferences preferences = Preferences.userRoot();
-            String host = preferences.get("remoteHost", "localhost");
-            Integer port = Integer.parseInt(preferences.get("remotePort", "8189"));
-            instance = new Client(host, port);
-            instance.run();
+            instance = new Client();
+        }
+
+        if (instance.socket == null) {
+            instance.connect();
         }
 
         return instance;
-    }
-
-    @Override
-    public void run() {
-        try {
-            socket = new Socket(host, port);
-            System.out.println("Connected to server!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public FileList getFileList(String value) {
@@ -112,5 +95,25 @@ public class Client implements Runnable {
         odis1 = new ObjectDecoderInputStream(socket.getInputStream());
 
         return odis1.readObject();
+    }
+
+    private void connect() {
+        Preferences preferences = Preferences.userRoot();
+        String host = preferences.get("remoteHost", "localhost");
+        int port = Integer.parseInt(preferences.get("remotePort", "8189"));
+        try {
+            socket = new Socket(host, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void disconnect() {
+        try {
+            socket.close();
+            socket = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
