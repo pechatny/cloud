@@ -25,17 +25,13 @@ public class LoginController {
     public Button cancelButton;
 
     public void loginAction(ActionEvent actionEvent) {
-        if (Main.client == null) {
-            Main.client = new Client("localhost", 8189);
-            Main.client.run();
-        }
-
+        Client client = Client.getInstance();
 
         String login = loginField.getText();
         String password = passwordField.getText();
 
         LoginRequest loginRequest = new LoginRequest(login, password);
-        SuccessResponse response = Main.client.login(loginRequest);
+        SuccessResponse response = client.login(loginRequest);
 
         if (response.isSuccess()) {
             loginButton.setText("Success!");

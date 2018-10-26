@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
             session.getTransaction().commit();
             session.close();
 
-            return user.id > 0;
+            return user.getId() > 0;
         }
     }
 }

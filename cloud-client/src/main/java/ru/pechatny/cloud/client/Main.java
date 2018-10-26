@@ -6,10 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.prefs.Preferences;
@@ -26,8 +24,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-
         preferences = Preferences.userRoot();
         boolean isAuthorized = preferences.getBoolean("authorized", false);
         readProperties();
@@ -36,6 +32,7 @@ public class Main extends Application {
         String sceneSource = "mainUnauth.fxml";
 //        String sceneSource = isAuthorized ? "mainWindow.fxml" : "mainUnauth.fxml";
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(sceneSource)));
+        root.getStylesheets().add(getClass().getClassLoader().getResource("FlatBee.css").toString());
         primaryStage.setTitle("Cloud Manager");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
@@ -55,27 +52,5 @@ public class Main extends Application {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    private void writeProperties() {
-        Properties prop = new Properties();
-        OutputStream output = null;
-        try {
-            output = new FileOutputStream("config.properties");
-            output = new FileOutputStream(getClass().getClassLoader().getResource("config.properties").getPath());
-
-
-            // set the properties value
-            prop.setProperty("database", "localhost");
-            prop.setProperty("dbuser", "mkyong");
-            prop.setProperty("dbpassword", "password");
-
-            // save properties to project root folder
-            prop.store(output, null);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }

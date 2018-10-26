@@ -18,7 +18,6 @@ import javafx.util.Callback;
 import ru.pechatny.cloud.client.Client;
 import ru.pechatny.cloud.client.FileItem;
 import ru.pechatny.cloud.client.FileRemoteItem;
-import ru.pechatny.cloud.client.Main;
 import ru.pechatny.cloud.client.WindowManager;
 import ru.pechatny.cloud.common.FileList;
 import ru.pechatny.cloud.common.FileMessage;
@@ -83,7 +82,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Client client = Main.client;
+        Client client = Client.getInstance();
 
         TreeItem<String> rootNode = getRootNode();
 

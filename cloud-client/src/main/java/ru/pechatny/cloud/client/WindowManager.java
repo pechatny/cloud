@@ -17,6 +17,8 @@ public class WindowManager {
         loginStage.initOwner(owner);
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(WindowManager.class.getClassLoader().getResource(fxml)));
+            root.getStylesheets().add(WindowManager.class.getClassLoader().getResource("FlatBee.css").toString());
+
             Scene scene = new Scene(root);
             loginStage.setScene(scene);
         } catch (IOException e) {

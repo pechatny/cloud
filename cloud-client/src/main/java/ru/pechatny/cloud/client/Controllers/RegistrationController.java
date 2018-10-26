@@ -7,7 +7,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ru.pechatny.cloud.client.Client;
-import ru.pechatny.cloud.client.Main;
 import ru.pechatny.cloud.common.RegistrationRequest;
 import ru.pechatny.cloud.common.SuccessResponse;
 
@@ -22,10 +21,7 @@ public class RegistrationController {
     }
 
     public void registerAction(ActionEvent actionEvent) {
-        if (Main.client == null) {
-            Main.client = new Client("localhost", 8189);
-            Main.client.run();
-        }
+        Client client = Client.getInstance();
 
         String login = loginField.getText();
         String password = passwordField.getText();
@@ -42,7 +38,7 @@ public class RegistrationController {
         }
 
         RegistrationRequest request = new RegistrationRequest(login, password);
-        SuccessResponse response = Main.client.registration(request);
+        SuccessResponse response = client.registration(request);
         if (response.isSuccess()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
 

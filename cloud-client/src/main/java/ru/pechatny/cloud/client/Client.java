@@ -12,27 +12,42 @@ import ru.pechatny.cloud.common.SuccessResponse;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.prefs.Preferences;
 
 public class Client implements Runnable {
+    private static Client instance;
     private String host;
     private int port;
     private Socket socket;
 
-    public Client(String host, int port) {
+    private Client() {
+    }
+
+    private Client(String host, int port) {
         this.host = host;
         this.port = port;
     }
 
+    public static Client getInstance() {
+        if (instance == null) {
+            Preferences preferences = Preferences.userRoot();
+            String host = preferences.get("remoteHost", "localhost");
+            Integer port = Integer.parseInt(preferences.get("remotePort", "8189"));
+            instance = new Client(host, port);
+            instance.run();
+        }
+
+        return instance;
+    }
+
     @Override
     public void run() {
-        ObjectEncoderOutputStream oeos = null;
-        ObjectDecoderInputStream odis = null;
         try {
             socket = new Socket(host, port);
+            System.out.println("Connected to server!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Connected to server!");
     }
 
     public FileList getFileList(String value) {
@@ -52,72 +67,50 @@ public class Client implements Runnable {
     }
 
     private Object sendCommand(Command command, String argument) {
-        ObjectEncoderOutputStream oeos;
-        Object responseObject = null;
-
         try {
-            oeos = new ObjectEncoderOutputStream(socket.getOutputStream());
             CommandMessage getFiles = new CommandMessage(command, argument);
-            oeos.writeObject(getFiles);
-            oeos.flush();
-
-            ObjectDecoderInputStream odis1 = new ObjectDecoderInputStream(socket.getInputStream());
-            responseObject = odis1.readObject();
+            return sendRequest(getFiles);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            return new Object();
         }
-
-        return responseObject;
     }
 
     public Object sendFile(FileMessage file) {
-        ObjectEncoderOutputStream oeos;
-        Object responseObject = null;
         try {
-            oeos = new ObjectEncoderOutputStream(socket.getOutputStream());
-            oeos.writeObject(file);
-            oeos.flush();
-
-            ObjectDecoderInputStream odis1 = new ObjectDecoderInputStream(socket.getInputStream());
-            responseObject = odis1.readObject();
+            return sendRequest(file);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return new Object();
         }
-
-        return responseObject;
     }
 
     public SuccessResponse login(LoginRequest loginRequest) {
-        ObjectEncoderOutputStream oeos;
         try {
-            oeos = new ObjectEncoderOutputStream(socket.getOutputStream());
-            oeos.writeObject(loginRequest);
-            oeos.flush();
-
-            ObjectDecoderInputStream odis1 = new ObjectDecoderInputStream(socket.getInputStream());
-
-            return (SuccessResponse) odis1.readObject();
+            return (SuccessResponse) sendRequest(loginRequest);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return new SuccessResponse(false);
         }
-
-        return new SuccessResponse(false);
     }
 
     public SuccessResponse registration(RegistrationRequest registrationRequest) {
-        ObjectEncoderOutputStream oeos;
         try {
-            oeos = new ObjectEncoderOutputStream(socket.getOutputStream());
-            oeos.writeObject(registrationRequest);
-            oeos.flush();
-
-            ObjectDecoderInputStream odis1 = new ObjectDecoderInputStream(socket.getInputStream());
-
-            return (SuccessResponse) odis1.readObject();
+            return (SuccessResponse) sendRequest(registrationRequest);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            return new SuccessResponse(false);
         }
+    }
 
-        return new SuccessResponse(false);
+    private <T> Object sendRequest(T request) throws IOException, ClassNotFoundException {
+        ObjectEncoderOutputStream oeos;
+        ObjectDecoderInputStream odis1;
+        oeos = new ObjectEncoderOutputStream(socket.getOutputStream());
+        oeos.writeObject(request);
+        oeos.flush();
+
+        odis1 = new ObjectDecoderInputStream(socket.getInputStream());
+
+        return odis1.readObject();
     }
 }

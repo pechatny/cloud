@@ -14,14 +14,18 @@ import java.util.prefs.Preferences;
 
 import static ru.pechatny.cloud.client.Main.primaryStage;
 
-public class Settings implements Initializable {
+public class SettingsController implements Initializable {
     private final DirectoryChooser directoryChooser = new DirectoryChooser();
     public TextField localPath;
     public Button saveButton;
+    public TextField hostField;
+    public TextField portField;
     private Preferences preferences;
 
     public void saveSettings(ActionEvent actionEvent) {
         preferences.put("storagePath", localPath.getText());
+        preferences.put("remoteHost", hostField.getText());
+        preferences.put("remotePort", portField.getText());
         ((Stage) (((Button) actionEvent.getSource()).getScene().getWindow())).close();
     }
 
@@ -38,5 +42,7 @@ public class Settings implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         preferences = Preferences.userRoot();
         localPath.setText(preferences.get("storagePath", ""));
+        hostField.setText(preferences.get("remoteHost", "localhost"));
+        portField.setText(preferences.get("remotePort", "8189"));
     }
 }

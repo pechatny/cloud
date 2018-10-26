@@ -4,44 +4,67 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="152.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="ru.pechatny.cloud.client.Controllers.Settings">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="194.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="ru.pechatny.cloud.client.Controllers.SettingsController">
     <children>
-        <VBox layoutX="16.0" layoutY="13.0" prefHeight="123.0" prefWidth="568.0">
+        <GridPane layoutX="51.0" layoutY="149.0" prefHeight="175.0" prefWidth="600.0" AnchorPane.bottomAnchor="19.0"
+                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="496.0" minWidth="10.0" prefWidth="462.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.0" minWidth="10.0" prefWidth="106.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
             <children>
                 <Label text="Настройки">
                     <font>
                         <Font name="System Bold" size="18.0"/>
                     </font>
-                    <VBox.margin>
-                        <Insets bottom="10.0"/>
-                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="10.0" top="10.0"/>
+                    </padding>
                 </Label>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <TextField fx:id="localPath" prefHeight="27.0" prefWidth="476.0"
-                                   promptText="Путь к локальному хранилищу"/>
-                        <Button fx:id="dirButton" mnemonicParsing="false" onAction="#chooseDirectory" text="Обзор...">
-                            <opaqueInsets>
-                                <Insets left="100.0"/>
-                            </opaqueInsets>
-                            <HBox.margin>
-                                <Insets left="20.0"/>
-                            </HBox.margin>
-                        </Button>
-                    </children>
-                </HBox>
-                <Button fx:id="saveButton" defaultButton="true" mnemonicParsing="false" onAction="#saveSettings"
-                        prefHeight="27.0" prefWidth="95.0" text="Сохранить">
-                    <VBox.margin>
-                        <Insets left="480.0" top="20.0"/>
-                    </VBox.margin>
+                <TextField fx:id="localPath" prefHeight="27.0" prefWidth="476.0"
+                           promptText="Путь к локальному хранилищу" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="20.0" right="20.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <Button fx:id="dirButton" mnemonicParsing="false" onAction="#chooseDirectory" text="Обзор..."
+                        GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <opaqueInsets>
+                        <Insets left="100.0"/>
+                    </opaqueInsets>
+                    <GridPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                    </GridPane.margin>
                 </Button>
+                <Button fx:id="saveButton" defaultButton="true" mnemonicParsing="false" onAction="#saveSettings"
+                        prefHeight="39.0" prefWidth="92.0" text="Сохранить" GridPane.columnIndex="1"
+                        GridPane.rowIndex="5">
+                    <GridPane.margin>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0"/>
+                    </GridPane.margin>
+                </Button>
+                <TextField fx:id="hostField" promptText="Хост" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="20.0" right="20.0"/>
+                    </GridPane.margin>
+                </TextField>
+                <TextField fx:id="portField" promptText="Порт" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="20.0" right="20.0"/>
+                    </GridPane.margin>
+                </TextField>
             </children>
-        </VBox>
+        </GridPane>
     </children>
 </AnchorPane>
