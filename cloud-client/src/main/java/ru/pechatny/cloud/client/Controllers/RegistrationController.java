@@ -51,7 +51,7 @@ public class RegistrationController {
 
             alert.setTitle("Успешно");
             alert.setHeaderText("Регистрация прошла успешно!");
-
+            loginField.getScene().getWindow().hide();
             alert.showAndWait();
         }
     }
