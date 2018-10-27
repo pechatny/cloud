@@ -10,6 +10,8 @@ import ru.pechatny.cloud.client.Client;
 import ru.pechatny.cloud.common.RegistrationRequest;
 import ru.pechatny.cloud.common.SuccessResponse;
 
+import java.io.IOException;
+
 public class RegistrationController {
     public TextField loginField;
     public PasswordField passwordField;
@@ -21,7 +23,12 @@ public class RegistrationController {
     }
 
     public void registerAction(ActionEvent actionEvent) {
-        Client client = Client.getInstance();
+        Client client = null;
+        try {
+            client = Client.getInstance();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         String login = loginField.getText();
         String password = passwordField.getText();

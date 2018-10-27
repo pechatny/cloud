@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Server {
-
     public static final AttributeKey<String> USER_DIR_ATTR = AttributeKey.valueOf("USER_DIR");
     private static final int PORT = 8189;
     private static final int MAX_OBJ_SIZE = 1024 * 1024 * 100; // 10 mb

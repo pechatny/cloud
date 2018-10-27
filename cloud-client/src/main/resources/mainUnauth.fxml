@@ -6,38 +6,21 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8"
-          fx:controller="ru.pechatny.cloud.client.Controllers.UnauthorizedController">
-    <columnConstraints>
-        <ColumnConstraints/>
-    </columnConstraints>
-    <rowConstraints>
-        <RowConstraints maxHeight="113.0" minHeight="84.0" prefHeight="93.0"/>
-        <RowConstraints maxHeight="451.0" minHeight="422.0" prefHeight="442.0"/>
-    </rowConstraints>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="550.0" prefWidth="549.0" xmlns="http://javafx.com/javafx/8"
+      fx:controller="ru.pechatny.cloud.client.Controllers.UnauthorizedController">
     <children>
-        <SplitPane prefHeight="450.0" prefWidth="526.0" GridPane.rowIndex="1">
-            <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="502.0"/>
-            </items>
-        </SplitPane>
         <SplitPane dividerPositions="0.4819277108433735" orientation="VERTICAL" prefHeight="85.0" prefWidth="526.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                     <children>
-                        <MenuBar layoutY="4.0" prefHeight="29.0" prefWidth="524.0">
+                        <MenuBar layoutY="4.0" prefHeight="29.0" prefWidth="524.0" AnchorPane.bottomAnchor="0.0"
+                                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <menus>
-                                <Menu mnemonicParsing="false" text="File">
+                                <Menu mnemonicParsing="false" text="Меню">
                                     <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#openSettings" text="Настройки"/>
                                         <MenuItem mnemonicParsing="false" onAction="#exit" text="Закрыть"/>
-                                    </items>
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Help">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" text="About"/>
                                     </items>
                                 </Menu>
                             </menus>
@@ -55,4 +38,4 @@
             </items>
         </SplitPane>
     </children>
-</GridPane>
+</VBox>

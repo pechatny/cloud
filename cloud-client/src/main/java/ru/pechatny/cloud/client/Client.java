@@ -21,7 +21,7 @@ public class Client {
     private Client() {
     }
 
-    public static Client getInstance() {
+    public static Client getInstance() throws IOException {
         if (instance == null) {
             instance = new Client();
         }
@@ -97,15 +97,11 @@ public class Client {
         return odis1.readObject();
     }
 
-    private void connect() {
+    private void connect() throws IOException {
         Preferences preferences = Preferences.userRoot();
         String host = preferences.get("remoteHost", "localhost");
         int port = Integer.parseInt(preferences.get("remotePort", "8189"));
-        try {
-            socket = new Socket(host, port);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        socket = new Socket(host, port);
     }
 
     public void disconnect() {

@@ -9,6 +9,7 @@ import static ru.pechatny.cloud.client.Main.primaryStage;
 
 public class UnauthorizedController {
 
+    public static Stage settings;
     public Button loginAction;
     public Button registrationButton;
 
@@ -24,5 +25,10 @@ public class UnauthorizedController {
     public void openRegistrationForm(ActionEvent actionEvent) {
         Stage registration = WindowManager.getModalWindow("registrationForm.fxml", primaryStage);
         registration.show();
+    }
+
+    public void openSettings(ActionEvent actionEvent) {
+        settings = WindowManager.getModalWindow("settings.fxml", primaryStage);
+        settings.show();
     }
 }

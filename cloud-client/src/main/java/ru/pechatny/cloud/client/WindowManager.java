@@ -3,6 +3,7 @@ package ru.pechatny.cloud.client;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -40,5 +41,13 @@ public class WindowManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void showErrorAlert(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+
+        alert.showAndWait();
     }
 }
